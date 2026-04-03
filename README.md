@@ -1,7 +1,7 @@
 # StudyFlow — AI-Powered Study Platform
 
 > Create notes, generate AI flashcards & quizzes, and master content with spaced repetition.
-Live Preview : (https://studyflow-l9t4.vercel.app/)
+Live Preview : [LIVE](https://studyflow-l9t4.vercel.app/)
 
 ## Features
 
