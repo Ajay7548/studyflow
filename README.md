@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StudyFlow — AI-Powered Study Platform
+
+> Create notes, generate AI flashcards & quizzes, and master content with spaced repetition.
+
+## Features
+
+- **Notes Management** — Create, edit, organize rich-text study notes by subject
+- **AI Flashcard Generation** — AI reads your notes and creates flashcards automatically
+- **AI Quiz Generation** — Generate multiple-choice quizzes from any note
+- **AI Study Chat** — Ask questions about your notes and get instant answers
+- **Spaced Repetition** — SM-2 algorithm schedules reviews for optimal retention
+- **Analytics Dashboard** — Track study streaks, time, and performance trends
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router, TypeScript) |
+| Database | MongoDB (Mongoose) |
+| Auth | NextAuth v5 (Google, GitHub, Email) |
+| AI | Groq (Llama 3.3 70B) via Vercel AI SDK |
+| UI | Tailwind CSS v4, shadcn/ui |
+| Editor | TipTap |
+| Charts | Recharts |
+| Testing | Playwright |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 22+
+- pnpm
+- MongoDB (local or Atlas)
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repo-url>
+cd studyflow
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env.local` and fill in values:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+Required variables:
+- `MONGODB_URI` — MongoDB connection string
+- `NEXTAUTH_SECRET` — Random secret (`openssl rand -base64 32`)
+- `GROQ_API_KEY` — Get from [console.groq.com](https://console.groq.com)
 
-To learn more about Next.js, take a look at the following resources:
+Optional (for OAuth):
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`
+- `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+**Dev Login**: In development mode, use `dev@studyflow.local` / `devpassword` to sign in without OAuth setup.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start dev server |
+| `pnpm build` | Production build |
+| `pnpm lint` | Run ESLint |
+| `pnpm type-check` | TypeScript check |
+| `pnpm check:loc` | Verify no file exceeds 200 LOC |
+| `pnpm test:e2e` | Run Playwright tests |
+| `pnpm test:e2e:ui` | Playwright UI mode |
+
+## Project Structure
+
+```
+src/
+  app/           # Next.js App Router pages and API routes
+  components/    # React components organized by feature
+  lib/           # Utilities, DB connection, auth config, AI setup
+  models/        # Mongoose schemas
+  actions/       # Server Actions
+  hooks/         # Custom React hooks
+  providers/     # Context providers
+  types/         # TypeScript types
+tests/e2e/       # Playwright end-to-end tests
+```
+
+## Architecture Decisions
+
+- **SM-2 Spaced Repetition**: Real learning science algorithm for optimal card scheduling
+- **Structured AI Output**: Zod schemas enforce type-safe AI responses via `generateObject()`
+- **Streaming Chat**: AI responses stream in real-time via Server-Sent Events
+- **Server Components**: Data fetching in RSC, client components only where interactivity is needed
+- **Early Return Pattern**: No if-else chains — guard clauses for clean control flow
+
+## Dev Guide
+
+### Adding a New Feature
+
+1. Define types in `src/types/index.ts`
+2. Create Mongoose model in `src/models/`
+3. Add Zod validation in `src/lib/validations/`
+4. Create API route in `src/app/api/`
+5. Build UI components in `src/components/`
+6. Add page in `src/app/(app)/`
+7. Run `pnpm check:loc` to verify file size limits
+
+### Code Style
+
+- Arrow functions only
+- Early return pattern (no if-else)
+- No ternary operators
+- Object params for all functions
+- Max 200 LOC per file (shadcn/ui excluded)
+- In-code docs for non-obvious logic
+
+## Footer
+
+Built by [Your Name] | [GitHub](https://github.com/yourprofile) | [LinkedIn](https://linkedin.com/in/yourprofile)
