@@ -10,7 +10,7 @@ const Footer = () => (
       <div className="flex items-center gap-4">
         <span>Built by Your Name</span>
         <Link
-          href="https://github.com/yourusername"
+          href="https://github.com/Ajay7548"
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-4 hover:text-foreground"
@@ -18,7 +18,7 @@ const Footer = () => (
           GitHub
         </Link>
         <Link
-          href="https://linkedin.com/in/yourusername"
+          href="www.linkedin.com/in/ajay-m-22b643150"
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-4 hover:text-foreground"
